@@ -415,6 +415,10 @@ def main() -> None:
     clean_preamble = preamble_raw
     clean_preamble = re.sub(r"\\DeclareAcronym\{[^}]+\}\{[^}]+\}\s*\n?", "", clean_preamble)
     clean_preamble = re.sub(r"\\usepackage\{acro\}[^\n]*\n?", "", clean_preamble)
+    
+    # Remove title, author, date so pandoc doesn't generate a text cover page over the image
+    for cmd in ["title", "author", "date"]:
+        clean_preamble = re.sub(rf"\\{cmd}\{{[^}}]*\}}\s*\n?", "", clean_preamble)
 
     # Write intermediate tex
     intermediate_tex = f"{base}_intermediate.tex"
