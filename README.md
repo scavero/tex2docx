@@ -36,8 +36,8 @@ Academic and technical documents written in LaTeX often need to be shared as Wor
 git clone https://github.com/scavero/tex2docx.git
 cd tex2docx
 
-# Install Python dependencies
-pip install -r requirements.txt
+# Install the package and its dependencies
+pip install .
 
 # Convert your document
 python tex2docx.py your_document.tex

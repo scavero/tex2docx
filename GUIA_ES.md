@@ -6,7 +6,7 @@
 |---|---|---|
 | `pdflatex` (MiKTeX) | Compilar LaTeX y los diagramas TikZ | [miktex.org](https://miktex.org/) |
 | `pandoc` | Convertir LaTeX → Word | [pandoc.org](https://pandoc.org/) |
-| `PyMuPDF` | Convertir PDF → PNG de alta resolución | `pip install PyMuPDF` |
+| `Python` | Entorno para ejecutar la herramienta | `pip install .` en la carpeta del proyecto |
 
 ---
 
