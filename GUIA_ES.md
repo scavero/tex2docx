@@ -55,6 +55,21 @@ tex2docx mi_documento.tex --dpi 400
 tex2docx mi_documento.tex --dpi 200
 ```
 
+### Formato exacto de LaTeX (Tipografía y Numeración)
+
+Por defecto, la herramienta descarga y aplica una plantilla de Word que imita la tipografía de LaTeX (Computer Modern, párrafos justificados). 
+
+Para mantener la numeración automática de los apartados (`1. Introducción`, `1.1 Contexto`), añade:
+
+```bash
+tex2docx mi_documento.tex --number-sections
+```
+
+Si tienes una plantilla de tu universidad o empresa (`.docx`), puedes aplicarla así:
+```bash
+tex2docx mi_documento.tex --reference-doc mi_plantilla.docx
+```
+
 ### Documento sin portada/índice/glosario
 
 Si tu documento no tiene portada personalizada ni glosario:
@@ -203,6 +218,12 @@ tex2docx documento.tex --dpi 400
 
 # Sin portada/índice/glosario (solo texto + tikz + bibliografía)
 tex2docx documento.tex --no-pages
+
+# Mantener la numeración de los apartados (1., 1.1, etc.)
+tex2docx documento.tex --number-sections
+
+# Aplicar estilos de tu propia plantilla de Word
+tex2docx documento.tex --reference-doc mi_plantilla.docx
 
 # Páginas personalizadas (ej: solo portada e índice)
 tex2docx documento.tex --pages 0,1 --labels portada,indice

@@ -64,6 +64,21 @@ tex2docx document.tex -o deliverable.docx
 tex2docx document.tex --dpi 400
 ```
 
+### Exact LaTeX Formatting (Template & Numbering)
+
+To make the Word document look exactly like LaTeX (using Computer Modern font, justified paragraphs, etc.), the tool now automatically downloads and uses a LaTeX-like template by default. 
+
+You can also preserve the LaTeX section numbering (`1. Introduction`, `1.1. Background`) using `--number-sections`:
+
+```bash
+tex2docx document.tex --number-sections
+```
+
+You can also pass your own custom Word template to apply your corporate/university styles:
+```bash
+tex2docx document.tex --reference-doc my_university_template.docx
+```
+
 ### Skip cover/TOC/glossary extraction
 
 For documents without a custom cover page or glossary:
@@ -102,8 +117,11 @@ options:
   --dpi                 DPI for TikZ rendering (default: 300)
   --pages               Comma-separated 0-indexed page numbers (default: 0,1,2)
   --labels              Comma-separated labels for pages (default: portada,indice,glosario)
-  --no-pages            Skip page extraction
-  --workdir             Working directory for images (default: tikz_png)
+  --no-pages            Skip page extraction (no cover/TOC/glossary images)
+  --reference-doc REFERENCE_DOC
+                        Custom Word template to apply styles
+  --number-sections     Number sections in the output Word document
+  --workdir WORKDIR     Directory to save extracted images (default: tikz_png)
 ```
 
 ## ⚙️ How It Works

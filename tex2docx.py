@@ -19,6 +19,7 @@ import os
 import re
 import subprocess
 import sys
+import urllib.request
 from typing import Dict, Tuple, Optional, List
 
 try:
@@ -53,6 +54,24 @@ def find_pandoc() -> Optional[str]:
                 return path
                 
     return None
+
+
+def get_default_reference_doc() -> str:
+    """Download default LaTeX-like Word template if not already cached."""
+    cache_dir = os.path.join(os.path.expanduser("~"), ".tex2docx")
+    os.makedirs(cache_dir, exist_ok=True)
+    template_path = os.path.join(cache_dir, "my_temp.docx")
+    
+    if not os.path.exists(template_path):
+        print("  Downloading default LaTeX Word template...")
+        url = "https://raw.githubusercontent.com/Mingzefei/latex2word/master/my_temp.docx"
+        try:
+            urllib.request.urlretrieve(url, template_path)
+            print("  Template downloaded successfully.")
+        except Exception as e:
+            print(f"  Warning: Could not download default template: {e}")
+            return ""
+    return template_path
 
 
 def extract_preamble_and_body(content: str) -> Tuple[str, str]:
@@ -299,8 +318,16 @@ def main() -> None:
         help="Skip page extraction (no cover/TOC/glossary images)"
     )
     parser.add_argument(
+        "--reference-doc", default=None,
+        help="Custom Word template to apply styles (default: uses LaTeX-like template from cache)"
+    )
+    parser.add_argument(
+        "--number-sections", action="store_true",
+        help="Number sections in the output Word document"
+    )
+    parser.add_argument(
         "--workdir", default="tikz_png",
-        help="Working directory for generated images (default: tikz_png)"
+        help="Directory to save extracted images (default: tikz_png)"
     )
     args = parser.parse_args()
 
@@ -431,9 +458,23 @@ def main() -> None:
 
     # Step 7 — Pandoc conversion
     print(f"\n[7/7] Converting to {output_docx}...")
+    
+    pandoc_args = [pandoc, "-f", "latex", "-t", "docx", "--resource-path=."]
+    
+    if args.number_sections:
+        pandoc_args.append("--number-sections")
+        
+    ref_doc = args.reference_doc
+    if not ref_doc:
+        ref_doc = get_default_reference_doc()
+        
+    if ref_doc and os.path.exists(ref_doc):
+        pandoc_args.extend(["--reference-doc", ref_doc])
+        
+    pandoc_args.extend([intermediate_tex, "-o", output_docx])
+    
     res = subprocess.run(
-        [pandoc, "-f", "latex", "-t", "docx",
-         "--resource-path=.", intermediate_tex, "-o", output_docx],
+        pandoc_args,
         capture_output=True, text=True,
     )
     if res.returncode != 0:

@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "tex2docx-converter"
-version = "0.1.1"
+version = "0.1.2"
 description = "Convert LaTeX documents to Word (.docx) preserving TikZ diagrams, cover page, table of contents, acronyms, and bibliography."
 readme = "README.md"
 requires-python = ">=3.8"
