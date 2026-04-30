@@ -4,6 +4,8 @@
 
 Academic and technical documents written in LaTeX often need to be shared as Word files for collaboration. `tex2docx` automates this conversion in a single command, rendering TikZ diagrams as high-resolution PNGs and keeping the rest as editable text.
 
+> 🇪🇸 **¿Hablas español?** Lee la [guía completa en español](GUIA_ES.md).
+
 ## ✨ Features
 
 | LaTeX Element | Word Output |
