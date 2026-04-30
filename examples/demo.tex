@@ -3,6 +3,7 @@
 \usepackage{tikz}
 \usepackage{acro}
 \usepackage{graphicx}
+\usepackage{amsmath}
 \usepackage[colorlinks=true, urlcolor=blue]{hyperref}
 
 % Define acronyms
@@ -48,6 +49,20 @@ One of the main features is converting TikZ diagrams into high-resolution images
 \end{tikzpicture}
 \caption{A simple process diagram.}
 \end{figure}
+
+\section{Equations}
+Standard LaTeX math environments are fully supported and converted seamlessly into Word equations.
+
+Here is an inline equation: $E = mc^2$. And here is a block equation:
+\begin{equation}
+    f(x) = \int_{-\infty}^{\infty} \hat{f}(\xi)\,e^{2 \pi i \xi x} \,d\xi
+\end{equation}
+
+You can also use aligned equations:
+\begin{align}
+    a^2 + b^2 &= c^2 \\
+    \sin^2 \theta + \cos^2 \theta &= 1
+\end{align}
 
 \section{Formatting}
 Standard LaTeX formatting is preserved:
