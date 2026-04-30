@@ -10,7 +10,7 @@ readme = "README.md"
 requires-python = ">=3.8"
 license = "MIT"
 authors = [
-  {name = "Santos", email = "santos@example.com"} 
+  {name = "Santos", email = "santoscaveroperez@gmail.com"} 
 ]
 dependencies = [
   "PyMuPDF>=1.23.0"
