@@ -1,5 +1,8 @@
 # tex2docx
 
+[![PyPI version](https://badge.fury.io/py/tex2docx-converter.svg)](https://badge.fury.io/py/tex2docx-converter)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 > **Convert LaTeX documents to Word (.docx) while preserving TikZ diagrams, cover pages, table of contents, glossaries, and bibliography.**
 
 Academic and technical documents written in LaTeX often need to be shared as Word files for collaboration. `tex2docx` automates this conversion in a single command, rendering TikZ diagrams as high-resolution PNGs and keeping the rest as editable text.
