@@ -328,8 +328,9 @@ def main() -> None:
 
     # Step 1 — Compile full PDF
     print("\n[1/7] Compiling full PDF...")
+    out_dir = os.path.dirname(tex_file) or "."
     subprocess.run(
-        ["pdflatex", "-interaction=nonstopmode", tex_file],
+        ["pdflatex", f"-output-directory={out_dir}", "-interaction=nonstopmode", tex_file],
         capture_output=True, text=True,
     )
     pdf_path = f"{base}.pdf"
