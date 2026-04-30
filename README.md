@@ -31,7 +31,7 @@ Academic and technical documents written in LaTeX often need to be shared as Wor
 
 ```bash
 # Clone the repository
-git clone https://github.com/YOUR_USERNAME/tex2docx.git
+git clone https://github.com/scavero/tex2docx.git
 cd tex2docx
 
 # Install Python dependencies
