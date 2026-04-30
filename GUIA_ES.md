@@ -6,7 +6,7 @@
 |---|---|---|
 | `pdflatex` (MiKTeX) | Compilar LaTeX y los diagramas TikZ | [miktex.org](https://miktex.org/) |
 | `pandoc` | Convertir LaTeX → Word | [pandoc.org](https://pandoc.org/) |
-| `Python` | Entorno para ejecutar la herramienta | `pip install .` en la carpeta del proyecto |
+| `Python` | Entorno para ejecutar la herramienta | `pip install tex2docx-converter` |
 
 ---
 
@@ -19,7 +19,7 @@ Trabaja como siempre en LaTeX con tus diagramas TikZ, portada, índice, glosario
 ### 2. Ejecuta el script
 
 ```bash
-python tex2docx.py mi_documento.tex
+tex2docx mi_documento.tex
 ```
 
 Esto genera automáticamente **`mi_documento_word.docx`**.
@@ -42,17 +42,17 @@ El Word incluirá:
 ### Cambiar nombre del archivo de salida
 
 ```bash
-python tex2docx.py mi_documento.tex -o entregable_final.docx
+tex2docx mi_documento.tex -o entregable_final.docx
 ```
 
 ### Cambiar resolución de los diagramas
 
 ```bash
 # Mayor calidad (más pesado)
-python tex2docx.py mi_documento.tex --dpi 400
+tex2docx mi_documento.tex --dpi 400
 
 # Menor calidad (más ligero)
-python tex2docx.py mi_documento.tex --dpi 200
+tex2docx mi_documento.tex --dpi 200
 ```
 
 ### Documento sin portada/índice/glosario
@@ -60,7 +60,7 @@ python tex2docx.py mi_documento.tex --dpi 200
 Si tu documento no tiene portada personalizada ni glosario:
 
 ```bash
-python tex2docx.py mi_documento.tex --no-pages
+tex2docx mi_documento.tex --no-pages
 ```
 
 ### Documento con páginas diferentes
@@ -68,7 +68,7 @@ python tex2docx.py mi_documento.tex --no-pages
 Si tu portada está en la página 1, el índice en la 2, pero **no tienes glosario**:
 
 ```bash
-python tex2docx.py mi_documento.tex --pages 0,1 --labels portada,indice
+tex2docx mi_documento.tex --pages 0,1 --labels portada,indice
 ```
 
 > [!NOTE]
@@ -79,13 +79,13 @@ python tex2docx.py mi_documento.tex --pages 0,1 --labels portada,indice
 Por ejemplo, si la portada ocupa 2 páginas y el glosario está en la página 4:
 
 ```bash
-python tex2docx.py mi_documento.tex --pages 0,2,3 --labels portada,indice,glosario
+tex2docx mi_documento.tex --pages 0,2,3 --labels portada,indice,glosario
 ```
 
 ### Cambiar directorio de trabajo
 
 ```bash
-python tex2docx.py mi_documento.tex --workdir images_output
+tex2docx mi_documento.tex --workdir images_output
 ```
 
 ---
@@ -193,20 +193,20 @@ Para que el script funcione correctamente, tu documento `.tex` debe seguir estas
 
 ```bash
 # Conversión básica
-python tex2docx.py documento.tex
+tex2docx documento.tex
 
 # Con nombre de salida personalizado
-python tex2docx.py documento.tex -o resultado.docx
+tex2docx documento.tex -o resultado.docx
 
 # Alta resolución para diagramas
-python tex2docx.py documento.tex --dpi 400
+tex2docx documento.tex --dpi 400
 
 # Sin portada/índice/glosario (solo texto + tikz + bibliografía)
-python tex2docx.py documento.tex --no-pages
+tex2docx documento.tex --no-pages
 
 # Páginas personalizadas (ej: solo portada e índice)
-python tex2docx.py documento.tex --pages 0,1 --labels portada,indice
+tex2docx documento.tex --pages 0,1 --labels portada,indice
 
 # Ver todas las opciones
-python tex2docx.py --help
+tex2docx --help
 ```

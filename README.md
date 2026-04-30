@@ -32,15 +32,11 @@ Academic and technical documents written in LaTeX often need to be shared as Wor
 ## 🚀 Quick Start
 
 ```bash
-# Clone the repository
-git clone https://github.com/scavero/tex2docx.git
-cd tex2docx
-
-# Install the package and its dependencies
-pip install .
+# Install from PyPI
+pip install tex2docx-converter
 
 # Convert your document
-python tex2docx.py your_document.tex
+tex2docx your_document.tex
 ```
 
 This generates **`your_document_word.docx`** automatically.
@@ -50,19 +46,19 @@ This generates **`your_document_word.docx`** automatically.
 ### Basic conversion
 
 ```bash
-python tex2docx.py document.tex
+tex2docx document.tex
 ```
 
 ### Custom output filename
 
 ```bash
-python tex2docx.py document.tex -o deliverable.docx
+tex2docx document.tex -o deliverable.docx
 ```
 
 ### Higher resolution diagrams
 
 ```bash
-python tex2docx.py document.tex --dpi 400
+tex2docx document.tex --dpi 400
 ```
 
 ### Skip cover/TOC/glossary extraction
@@ -70,7 +66,7 @@ python tex2docx.py document.tex --dpi 400
 For documents without a custom cover page or glossary:
 
 ```bash
-python tex2docx.py document.tex --no-pages
+tex2docx document.tex --no-pages
 ```
 
 ### Custom page extraction
@@ -79,16 +75,16 @@ Extract only specific pages (0-indexed) with custom labels:
 
 ```bash
 # Only cover and TOC (no glossary)
-python tex2docx.py document.tex --pages 0,1 --labels portada,indice
+tex2docx document.tex --pages 0,1 --labels portada,indice
 
 # Cover spans 2 pages, glossary on page 4
-python tex2docx.py document.tex --pages 0,2,3 --labels portada,indice,glosario
+tex2docx document.tex --pages 0,2,3 --labels portada,indice,glosario
 ```
 
 ### All options
 
 ```bash
-python tex2docx.py --help
+tex2docx --help
 ```
 
 ```
