@@ -128,7 +128,7 @@ def resolve_acronyms(text: str, acronyms: Dict[str, str]) -> str:
         lambda m: acronyms.get(m.group(1), m.group(1)) + "s",
         text,
     )
-    for cmd in ["ac", "acs", "acf"]:
+    for cmd in ["ac", "acs", "acf", "acl"]:
         text = re.sub(
             rf"\\{cmd}\{{([^}}]+)\}}",
             lambda m: acronyms.get(m.group(1), m.group(1)),

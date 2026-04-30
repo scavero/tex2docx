@@ -16,5 +16,10 @@ dependencies = [
   "PyMuPDF>=1.23.0"
 ]
 
+[project.optional-dependencies]
+dev = [
+  "pytest>=7.0.0"
+]
+
 [project.scripts]
 tex2docx = "tex2docx:main"
