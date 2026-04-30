@@ -8,7 +8,7 @@ version = "0.1.0"
 description = "Convert LaTeX documents to Word (.docx) preserving TikZ diagrams, cover page, table of contents, acronyms, and bibliography."
 readme = "README.md"
 requires-python = ">=3.8"
-license = {text = "MIT"}
+license = "MIT"
 authors = [
   {name = "Santos", email = "santos@example.com"} 
 ]
