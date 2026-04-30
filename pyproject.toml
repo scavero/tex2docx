@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tex2docx"
+version = "0.1.0"
+description = "Convert LaTeX documents to Word (.docx) preserving TikZ diagrams, cover page, table of contents, acronyms, and bibliography."
+readme = "README.md"
+requires-python = ">=3.8"
+license = {text = "MIT"}
+authors = [
+  {name = "Santos", email = "santos@example.com"} 
+]
+dependencies = [
+  "PyMuPDF>=1.23.0"
+]
+
+[project.scripts]
+tex2docx = "tex2docx:main"

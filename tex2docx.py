@@ -19,6 +19,7 @@ import os
 import re
 import subprocess
 import sys
+from typing import Dict, Tuple, Optional, List
 
 try:
     import fitz  # PyMuPDF
@@ -27,8 +28,8 @@ except ImportError:
     sys.exit(1)
 
 
-def find_pandoc():
-    """Find pandoc executable."""
+def find_pandoc() -> Optional[str]:
+    """Find pandoc executable across different platforms."""
     # Check PATH first
     for cmd in ["pandoc", "pandoc.exe"]:
         try:
@@ -36,23 +37,36 @@ def find_pandoc():
             return cmd
         except (FileNotFoundError, subprocess.CalledProcessError):
             pass
+            
     # Check common Windows location
-    local_pandoc = os.path.join(
-        os.environ.get("LOCALAPPDATA", ""), "Pandoc", "pandoc.exe"
-    )
-    if os.path.exists(local_pandoc):
-        return local_pandoc
+    if sys.platform == "win32":
+        local_pandoc = os.path.join(
+            os.environ.get("LOCALAPPDATA", ""), "Pandoc", "pandoc.exe"
+        )
+        if os.path.exists(local_pandoc):
+            return local_pandoc
+            
+    # Check common macOS/Linux locations
+    else:
+        for path in ["/usr/local/bin/pandoc", "/opt/homebrew/bin/pandoc", "/usr/bin/pandoc"]:
+            if os.path.exists(path):
+                return path
+                
     return None
 
 
-def extract_preamble_and_body(content):
+def extract_preamble_and_body(content: str) -> Tuple[str, str]:
     """Split a LaTeX document into preamble and body."""
     marker = r"\begin{document}"
-    idx = content.index(marker)
-    return content[:idx], content[idx:]
+    try:
+        idx = content.index(marker)
+        return content[:idx], content[idx:]
+    except ValueError:
+        print("ERROR: \\begin{document} not found in the TeX file.")
+        sys.exit(1)
 
 
-def build_standalone_preamble(preamble_raw):
+def build_standalone_preamble(preamble_raw: str) -> str:
     """Build a minimal preamble for standalone TikZ compilation."""
     lines = [
         r"\usepackage[T1]{fontenc}",
@@ -97,7 +111,7 @@ def build_standalone_preamble(preamble_raw):
     return "\n".join(lines)
 
 
-def parse_acronyms(preamble_raw):
+def parse_acronyms(preamble_raw: str) -> Dict[str, str]:
     """Extract acronym short forms from \\DeclareAcronym commands."""
     acronyms = {}
     for m in re.finditer(
@@ -107,7 +121,7 @@ def parse_acronyms(preamble_raw):
     return acronyms
 
 
-def resolve_acronyms(text, acronyms):
+def resolve_acronyms(text: str, acronyms: Dict[str, str]) -> str:
     """Replace \\ac{X}, \\acp{X}, \\acs{X}, \\acl{X} with plain text."""
     text = re.sub(
         r"\\acp\{([^}]+)\}",
@@ -123,7 +137,7 @@ def resolve_acronyms(text, acronyms):
     return text
 
 
-def compile_tikz(tikz_code, standalone_preamble, output_dir, index, dpi=300):
+def compile_tikz(tikz_code: str, standalone_preamble: str, output_dir: str, index: int, dpi: int = 300) -> Optional[Tuple[str, int, int]]:
     """Compile a TikZ snippet to a standalone PNG. Returns the path or None."""
     tex = (
         r"\documentclass[tikz, margin=2mm]{standalone}" + "\n"
@@ -156,7 +170,7 @@ def compile_tikz(tikz_code, standalone_preamble, output_dir, index, dpi=300):
     return png_path, w, h
 
 
-def extract_pdf_pages(pdf_path, pages_dict, output_dir, dpi=250):
+def extract_pdf_pages(pdf_path: str, pages_dict: Dict[int, str], output_dir: str, dpi: int = 250) -> Dict[str, str]:
     """Extract specific pages from a PDF as PNGs.
 
     pages_dict: {page_number (0-indexed): label}
@@ -177,7 +191,7 @@ def extract_pdf_pages(pdf_path, pages_dict, output_dir, dpi=250):
     return result
 
 
-def format_bibliography(body):
+def format_bibliography(body: str) -> Tuple[str, int]:
     """Convert \\begin{thebibliography}...\\end{thebibliography} to a
     well-formatted \\section + \\enumerate that pandoc renders cleanly as
     editable text in Word.
@@ -220,7 +234,7 @@ def format_bibliography(body):
     return body, len(items)
 
 
-def replace_page_blocks(body, page_images):
+def replace_page_blocks(body: str, page_images: Dict[str, str]) -> str:
     """Replace \\maketitle, \\tableofcontents, \\printacronyms with page images."""
 
     def img_block(path):
@@ -259,7 +273,7 @@ def replace_page_blocks(body, page_images):
     return body
 
 
-def main():
+def main() -> None:
     parser = argparse.ArgumentParser(
         description="Convert LaTeX to Word preserving TikZ, cover, TOC, and glossary."
     )
